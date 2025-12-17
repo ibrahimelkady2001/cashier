@@ -1,0 +1,66 @@
+﻿<?xml version = "1.0" encoding = "UTF-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Cashier"
+             x:Class="Cashier.App">
+    <Application.Resources>
+        <ResourceDictionary>
+               <Style TargetType="NavigationPage">
+
+                <Setter Property="FlowDirection" Value="RightToLeft" />
+                <Setter Property="BarTextColor" Value="#073164" />
+            </Style>
+
+            <Style TargetType="ContentPage">
+               
+                <Setter Property="FlowDirection" Value="RightToLeft" />
+
+                <Setter Property="HideSoftInputOnTapped" Value="True" />
+            </Style>
+            <Style TargetType="Label">
+
+                <Setter Property="FlowDirection" Value="RightToLeft" />
+           
+                <Setter Property="FontAutoScalingEnabled" Value="False" />
+          
+            </Style>
+
+            <Style TargetType="StackLayout">
+                <Setter Property="FlowDirection" Value="RightToLeft" />
+
+            </Style>
+
+            <Style TargetType="Grid">
+                <Setter Property="FlowDirection" Value="RightToLeft" />
+
+            </Style>
+            <Style TargetType="Border">
+                <Setter Property="FlowDirection" Value="RightToLeft" />
+
+
+            </Style>
+            <Style TargetType="Entry">
+
+                <Setter Property="FlowDirection" Value="RightToLeft" />
+                <Setter Property="FontAutoScalingEnabled" Value="False" />
+                <Setter Property="FontFamily" Value="archivo" />
+
+            </Style>
+            <Style TargetType="Button">
+              
+                <Setter Property="FontAutoScalingEnabled" Value="False" />
+          
+            </Style>
+            <Style TargetType="BoxView">
+                <Setter Property="FlowDirection" Value="RightToLeft" />
+
+
+            </Style>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Cashier.OrderDetailPage" xmlns:appMaker="clr-namespace:Cashier"  x:DataType="appMaker:Order"
+             Title="OrderDetailPage">
+   <StackLayout>
+<Label    Text="{Binding OrderId, StringFormat='طلب رقم:  {0}'}"  FontSize="Medium" TextColor="Black"/>
+ <Label    Text="{Binding OrderDate, StringFormat='التاريخ :  {0}'}"  FontSize="Medium" TextColor="Black"/>
+  <Label    Text="{Binding Total, StringFormat='الاجمالي :  {0}'}"  FontSize="Large" TextColor="Black"/>
+
+             <!-- Product List -->
+            <ListView  VerticalOptions="FillAndExpand" ItemsSource="{Binding Products}"
+                x:Name="ProductListView"
+                HasUnevenRows="True"
+                SeparatorVisibility="Default">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="appMaker:Product">
+                        <ViewCell>
+                            <StackLayout 
+                                Orientation="Horizontal" 
+                                Spacing="10"
+                                Padding="10">
+
+                                <!-- Barcode Label -->
+                                <Label 
+                                    Text="{Binding ProudctId}" 
+                                    FontSize="16" 
+                                    VerticalOptions="Center" />
+
+                                <!-- Product Name Label -->
+                                <Label 
+                                    Text="{Binding ProudctName}" 
+                                    FontSize="16" 
+                                    VerticalOptions="Center" />
+
+                                     <Label 
+    Text="{Binding ProudctPrice, StringFormat='{0} جنيه'}" 
+    FontSize="16" 
+    VerticalOptions="Center" />
+
+                                <!-- Quantity Input -->
+                                <Entry  Text="{Binding quant,Mode=TwoWay}" 
+                                   IsReadOnly="True"
+                                    Keyboard="Numeric" 
+                                    Placeholder="Quantity" 
+                                    WidthRequest="100" 
+                                    VerticalOptions="Center" />
+                                  
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+
+<StackLayout x:Name="actionlay" Orientation="Horizontal">
+<Button  Clicked="CreateBut_Clicked" BackgroundColor="Orange"
+                            x:Name="CreateBut" MinimumHeightRequest="50" FontSize="25" WidthRequest="250"
+                            HorizontalOptions="CenterAndExpand" TextColor="White" BorderWidth="1" Text="اتمام الطلب"
+                            Margin="0,30,0,10" />
+<Button  Clicked="cancel_Clicked" BackgroundColor="Red" 
+                            x:Name="cancel" MinimumHeightRequest="50" FontSize="25" WidthRequest="250"
+                            HorizontalOptions="CenterAndExpand" TextColor="White" BorderWidth="1" Text="الغاء الطلب"
+                            Margin="0,30,0,10" />
+</StackLayout>
+
+   </StackLayout>
+</ContentPage>

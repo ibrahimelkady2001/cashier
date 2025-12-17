@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Cashier.OrdersPage"  xmlns:appMaker="clr-namespace:Cashier"
+             Title="OrdersPage">
+   <StackLayout Padding="10">
+            <!-- Header -->
+            <Label Text="الطلبات المنتظرة" FontSize="Large" HorizontalOptions="Center" Margin="0,10,0,20"/>
+
+            <!-- ListView to Display Order IDs -->
+            <ListView HasUnevenRows="True" x:Name="OrderListView" ItemsSource="{Binding Orders}" ItemSelected="ListView_ItemSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="appMaker:Order">
+                        <ViewCell>
+                            <StackLayout Padding="10" BackgroundColor="LightGray" Margin="0,5">
+                                <Label    Text="{Binding OrderId, StringFormat='طلب رقم:  {0}'}"  FontSize="Medium" TextColor="Black"/>
+                                  <Label    Text="{Binding OrderDate, StringFormat='التاريخ :  {0}'}"  FontSize="Medium" TextColor="Black"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+</ContentPage>

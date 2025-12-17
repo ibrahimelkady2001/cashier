@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" BackgroundColor="#f5f5f5" NavigationPage.HasNavigationBar="False" xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="Cashier.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout FlowDirection="RightToLeft" Spacing="20" Padding="20">
+
+            <!-- Header Section -->
+            <Label Text="الشاشة الرئيسية" 
+                   FontSize="36" 
+                   FontAttributes="Bold" 
+                   HorizontalOptions="Center" 
+                   TextColor="#333" />
+
+            <!-- Orders Section -->
+            <Border StrokeShape="RoundRectangle 15" 
+                    StrokeThickness="2" 
+                    Stroke="#4caf50" 
+                    BackgroundColor="White" 
+                    Padding="15">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Orders_Tapped">
+                            
+                        </TapGestureRecognizer>
+                    </Border.GestureRecognizers>
+                <VerticalStackLayout FlowDirection="RightToLeft">
+                    <Label Text="الطلبات المنتظرة" 
+                           FontSize="24" 
+                           FontAttributes="Bold" 
+                           TextColor="#4caf50" />
+                    <Label x:Name="OrdersCount" Text="عدد الطلبات: 12" 
+                           FontSize="18" 
+                           TextColor="#666" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Order History Section -->
+            <Border StrokeShape="RoundRectangle 15" 
+                    StrokeThickness="2" 
+                    Stroke="#2196f3" 
+                    BackgroundColor="White" 
+                    Padding="15">
+                     <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OrdersHistory_Tapped">
+                            
+                        </TapGestureRecognizer>
+                    </Border.GestureRecognizers>
+                <VerticalStackLayout FlowDirection="RightToLeft">
+                    <Label Text="سجل الطلبات" 
+                           FontSize="24" 
+                           FontAttributes="Bold" 
+                           TextColor="#2196f3" />
+                    <Label Text="عرض جميع الطلبات السابقة" 
+                           FontSize="18" 
+                           TextColor="#666" />
+                </VerticalStackLayout>
+            </Border>
+ <Border StrokeShape="RoundRectangle 15" 
+                    StrokeThickness="2" 
+                    Stroke="#795548" 
+                    BackgroundColor="White" 
+                    Padding="15">
+                    <Border.Behaviors>
+                        <toolkit:TouchBehavior PressedScale =".9" PressedOpacity=".9" TouchGestureCompleted="Inventory_TouchGestureCompleted"></toolkit:TouchBehavior>
+                    </Border.Behaviors>
+                <VerticalStackLayout>
+                    <Label Text="المخزن" 
+                           FontSize="24" 
+                           FontAttributes="Bold" 
+                           TextColor="#795548" />
+                    <Label Text="إدارة المخزون والمنتجات" 
+                           FontSize="18" 
+                           TextColor="#666" />
+                </VerticalStackLayout>
+            </Border>
+            <!-- Suppliers Section -->
+            <Border StrokeShape="RoundRectangle 15" 
+                    StrokeThickness="2" 
+                    Stroke="#ff9800" 
+                    BackgroundColor="White" 
+                    Padding="15">
+                <VerticalStackLayout FlowDirection="RightToLeft">
+                    <Label Text="الموردين" 
+                           FontSize="24" 
+                           FontAttributes="Bold" 
+                           TextColor="#ff9800" />
+                    <Label Text="إدارة قائمة الموردين" 
+                           FontSize="18" 
+                           TextColor="#666" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Returns Section -->
+            <Border StrokeShape="RoundRectangle 15" 
+                    StrokeThickness="2" 
+                    Stroke="#f44336" 
+                    BackgroundColor="White" 
+                    Padding="15">
+                <VerticalStackLayout>
+                    <Label Text="المسترجعين" 
+                           FontSize="24" 
+                           FontAttributes="Bold" 
+                           TextColor="#f44336" />
+                    <Label Text="إدارة الطلبات المسترجعة" 
+                           FontSize="18" 
+                           TextColor="#666" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Employees Section -->
+            <Border StrokeShape="RoundRectangle 15" 
+                    StrokeThickness="2" 
+                    Stroke="#9c27b0" 
+                    BackgroundColor="White" 
+                    Padding="15">
+                <VerticalStackLayout>
+                    <Label Text="الموظفين" 
+                           FontSize="24" 
+                           FontAttributes="Bold" 
+                           TextColor="#9c27b0" />
+                    <Label Text="إدارة الموظفين والصلاحيات" 
+                           FontSize="18" 
+                           TextColor="#666" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Attendance Section -->
+            <Border StrokeShape="RoundRectangle 15" 
+                    StrokeThickness="2" 
+                    Stroke="#00bcd4" 
+                    BackgroundColor="White" 
+                    Padding="15">
+                <VerticalStackLayout>
+                    <Label Text="الحضور" 
+                           FontSize="24" 
+                           FontAttributes="Bold" 
+                           TextColor="#00bcd4" />
+                    <Label Text="تسجيل الحضور والانصراف" 
+                           FontSize="18" 
+                           TextColor="#666" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Inventory Section -->
+           
+
+            <!-- Accounts Section -->
+            <HorizontalStackLayout FlowDirection="RightToLeft" Spacing="10">
+                <Border StrokeShape="RoundRectangle 15" 
+                        StrokeThickness="2" 
+                        Stroke="#3f51b5" 
+                        BackgroundColor="White" 
+                        Padding="10">
+                    <Label Text="حساب إبراهيم القاضي" 
+                           FontSize="18" 
+                           FontAttributes="Bold" 
+                           TextColor="#3f51b5" 
+                           HorizontalTextAlignment="Center" />
+                </Border>
+                <Border StrokeShape="RoundRectangle 15" 
+                        StrokeThickness="2" 
+                        Stroke="#3f51b5" 
+                        BackgroundColor="White" 
+                        Padding="10">
+                    <Label Text="حساب رضا القاضي" 
+                           FontSize="18" 
+                           FontAttributes="Bold" 
+                           TextColor="#3f51b5" 
+                           HorizontalTextAlignment="Center" />
+                </Border>
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
