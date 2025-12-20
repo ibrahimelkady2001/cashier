@@ -6,11 +6,25 @@
               xmlns:appMaker="clr-namespace:Cashier"
              Title="المخزن">
 
-    <Grid RowDefinitions="*, Auto">
+    <StackLayout>
+        <Button Text ="Back" TextColor ="Black" HorizontalOptions="Start" Clicked="Back_Clicked" />
+        <StackLayout Orientation="Horizontal">
+
+
+        <SearchBar TextChanged="searchbar_TextChanged" BackgroundColor="White" TextColor="Black" x:Name="searchbar" HorizontalOptions="FillAndExpand"></SearchBar>
+             <Picker SelectedIndexChanged="orderpicker_SelectedIndexChanged" HorizontalTextAlignment="Center" WidthRequest="200" x:Name="orderpicker">
+               
+                </Picker> 
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                <Label VerticalTextAlignment="Center" VerticalOptions="Center" TextColor ="Black" FontSize="20" Text="فلتر حسب النوع :"></Label>
+                       <Picker VerticalOptions="Center" VerticalTextAlignment="Center" SelectedIndexChanged="catgoryPicker_SelectedIndexChanged" HorizontalTextAlignment="Center" WidthRequest="200" x:Name="catgoryPicker"/>
+               </StackLayout>
+        
         <!-- ListView for Products -->
-        <ListView Grid.Row="0" 
+        <ListView Grid.Row="0"  
                   x:Name="ProductsListView"  IsPullToRefreshEnabled="True"
-                  HasUnevenRows="True"  ItemTapped="ProductsListView_ItemTapped"
+                  HasUnevenRows="True"  ItemTapped="ProductsListView_ItemTapped" CachingStrategy="RecycleElementAndDataTemplate"
                   SeparatorVisibility="None" 
                   Margin="10">
             <ListView.ItemTemplate>
@@ -22,7 +36,7 @@
                                 BackgroundColor="White" 
                                 Padding="15" 
                                 Margin="5">
-                            <Grid ColumnDefinitions="*, *, *, *, *">
+                            <Grid ColumnDefinitions="*, *, *, *, *,*">
                                 <!-- Product Name -->
                                 <Label Grid.Column="0" 
                                        Text="{Binding ProudctName}" 
@@ -62,6 +76,12 @@
                                        TextColor="#ff9800" 
                                        VerticalOptions="Center" 
                                        HorizontalTextAlignment="End" />
+                                                         <Label Grid.Column="4" 
+                                       Text="{Binding  ProudctCategory}" 
+                                       FontSize="14" 
+                                       TextColor="#ff9800" 
+                                       VerticalOptions="Center" 
+                                       HorizontalTextAlignment="End" />
                             </Grid>
                         </Border>
                     </ViewCell>
@@ -89,5 +109,5 @@
                     HeightRequest="50" 
                     Clicked="AddProduct_Clicked" />
         </Border>
-    </Grid>
+    </StackLayout>
 </ContentPage>

@@ -2,12 +2,12 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Cashier.AddProduct"
-               BackgroundColor="#f5f5f5"
+               BackgroundColor="#f5f5f5" NavigationPage.HasBackButton="True" NavigationPage.HasNavigationBar="True"
              Title="إضافة منتج جديد">
 
     <ScrollView>
         <VerticalStackLayout Spacing="20" Padding="20">
-
+<Button Text ="Back" TextColor ="Black" HorizontalOptions="Start" Clicked="Back_Clicked" />
             <!-- Product Name -->
             <Border StrokeShape="RoundRectangle 10" 
                     StrokeThickness="1" 
@@ -103,8 +103,8 @@
                     Stroke="#ccc" 
                     BackgroundColor="White" 
                     Padding="10">
-                <HorizontalStackLayout>
-                    <Label Text="عدد عبوات المنتج المصغر"
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="اسم المنتج"
                            FontSize="16" 
                            TextColor="#333" 
                            VerticalTextAlignment="Center" />
@@ -112,36 +112,9 @@
                            Placeholder="اسم المنتج" 
                            FontSize="16" 
                            TextColor="#333" 
-                           WidthRequest="200" 
+                 HorizontalOptions="FillAndExpand"
                            Margin="10,0,0,0" />
-                </HorizontalStackLayout>
-            </Border>
-  <Border StrokeShape="RoundRectangle 10" 
-                    StrokeThickness="1" 
-                    Stroke="#ccc" 
-                    BackgroundColor="White" 
-                    Padding="10">
-                <HorizontalStackLayout>
-                    <Label Text="المنتج المصغر" 
-                           FontSize="16" 
-                           TextColor="#333" 
-                           VerticalTextAlignment="Center" />
-                    <Entry x:Name="SubProductent" 
-                           Placeholder="رقم الباركود" 
-                           FontSize="16" 
-                           TextColor="#333" 
-                           WidthRequest="200" 
-                           Margin="10,0,0,0" />
-                              <Button Text="إنشاء عشوائي" 
-                            FontSize="14" 
-                            TextColor="White" 
-                            BackgroundColor="#4caf50" 
-                            CornerRadius="5" 
-                            WidthRequest="100" 
-                            HeightRequest="30" 
-                            Clicked="GenerateRandoSubBarcode_Clicked" 
-                            Margin="10,0,0,0" />
-                             <Button Text="طباعة"  
+                                 <Button Text="طباعة"  
                             FontSize="14" 
                             TextColor="White" 
                             BackgroundColor="#4caf50" 
@@ -149,6 +122,34 @@
                             WidthRequest="100" 
                             HeightRequest="30" 
                             Clicked="Print_Clicked" 
+                            Margin="10,0,0,0" />
+
+                </StackLayout>
+            </Border>
+<Border StrokeShape="RoundRectangle 10" 
+                    StrokeThickness="1" 
+                    Stroke="#ccc" 
+                    BackgroundColor="White" 
+                    Padding="10">
+                <HorizontalStackLayout>
+                    <Label Text="رقم باركود المنتج المصغر"
+                           FontSize="16" 
+                           TextColor="#333" 
+                           VerticalTextAlignment="Center" />
+                    <Entry x:Name="SubProductbarcode" 
+                           Placeholder="رقم باركود المنتج المصغر"
+                           FontSize="16" 
+                           TextColor="#333" 
+                           WidthRequest="200" 
+                           Margin="10,0,0,0" />
+                                <Button Text="إنشاء عشوائي" 
+                            FontSize="14" 
+                            TextColor="White" 
+                            BackgroundColor="#4caf50" 
+                            CornerRadius="5" 
+                            WidthRequest="100" 
+                            HeightRequest="30" 
+                            Clicked="GenerateRandomSubBarcode_Clicked" 
                             Margin="10,0,0,0" />
                 </HorizontalStackLayout>
             </Border>
@@ -282,7 +283,25 @@
                            TextColor="#333" 
                            VerticalTextAlignment="Center" />
                     <Picker x:Name="SupplierPicker" 
-                            Title="اختر المورد" 
+                          
+                            FontSize="16" 
+                            TextColor="#333" 
+                            WidthRequest="200" 
+                            Margin="10,0,0,0" />
+                </HorizontalStackLayout>
+            </Border>
+        <Border StrokeShape="RoundRectangle 10" 
+                    StrokeThickness="1" 
+                    Stroke="#ccc" 
+                    BackgroundColor="White" 
+                    Padding="10">
+                <HorizontalStackLayout>
+                    <Label Text="اختر التصنيف"
+                           FontSize="16" 
+                           TextColor="#333" 
+                           VerticalTextAlignment="Center" />
+                    <Picker x:Name="categoryPicker"  SelectedIndexChanged="categoryPicker_SelectedIndexChanged"
+                        
                             FontSize="16" 
                             TextColor="#333" 
                             WidthRequest="200" 
@@ -292,7 +311,7 @@
 
             <!-- Print Barcode Sticker -->
         
-
+<StackLayout Orientation="Horizontal" Spacing="9">
             <!-- Add Product Button -->
             <Border StrokeShape="RoundRectangle 25" 
                     StrokeThickness="1" 
@@ -311,7 +330,24 @@
                         HeightRequest="50" 
                         Clicked="AddProduct_Clicked" />
             </Border>
-
+    <Border StrokeShape="RoundRectangle 25"  IsVisible="False"
+                    StrokeThickness="1" x:Name="delproductbor"
+                    Stroke="#fff" 
+                    BackgroundColor="Red" 
+                    Padding="15" 
+                    HorizontalOptions="Center" 
+                    WidthRequest="200">
+                <Button Text="حذف المنتج"  x:Name="delproductbut"
+                        FontSize="18" 
+                        TextColor="White" 
+                        BackgroundColor="Red" 
+                        BorderColor="Red" 
+                        CornerRadius="25" 
+                        WidthRequest="200" 
+                        HeightRequest="50" 
+                        Clicked="Del_Clicked" />
+            </Border>
+            </StackLayout>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

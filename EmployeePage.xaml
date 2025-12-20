@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Cashier.EmployeePage"
+      
+             Title="تفاصيل الموظف"
+             FlowDirection="RightToLeft"
+             BackgroundColor="#F0F4F8">
+
+    <ContentPage.Resources>
+        <!-- تعريف الألوان الرئيسية للتطبيق -->
+        <Color x:Key="PrimaryGradientStart">#1E3A8A</Color>
+        <Color x:Key="PrimaryGradientEnd">#3B82F6</Color>
+        <Color x:Key="PageBackgroundColor">#F0F4F8</Color>
+        <Color x:Key="CardBackgroundColor">#FFFFFF</Color>
+        <Color x:Key="PrimaryTextColor">#FFFFFF</Color>
+        <Color x:Key="SecondaryTextColor">#4B5563</Color>
+        <Color x:Key="AccentColor">#F59E0B</Color>
+        <Color x:Key="WarningColor">#DC2626</Color>
+
+        <!-- تعريف الأنماط لتسهيل إعادة الاستخدام -->
+        <Style x:Key="CardBorderStyle" TargetType="Border">
+            <Setter Property="BackgroundColor" Value="{StaticResource CardBackgroundColor}" />
+            <Setter Property="Padding" Value="20" />
+            <Setter Property="Margin" Value="15,10" />
+            <Setter Property="StrokeShape" Value="RoundRectangle 20" />
+            <Setter Property="Shadow">
+                <Shadow Brush="#000000" Offset="5,5" Radius="15" Opacity="0.1" />
+            </Setter>
+        </Style>
+
+        <Style x:Key="InfoTitleLabelStyle" TargetType="Label">
+            <Setter Property="TextColor" Value="{StaticResource SecondaryTextColor}" />
+            <Setter Property="FontSize" Value="16" />
+        </Style>
+
+        <Style x:Key="InfoDataLabelStyle" TargetType="Label">
+            <Setter Property="TextColor" Value="{StaticResource PrimaryGradientStart}" />
+            <Setter Property="FontSize" Value="24" />
+            <Setter Property="FontAttributes" Value="Bold" />
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto, *">
+
+        <!-- 1. خلفية متدرجة للجزء العلوي -->
+        <BoxView Grid.Row="0" HeightRequest="220">
+            <BoxView.Background>
+                <LinearGradientBrush EndPoint="1,0">
+                    <GradientStop Color="{StaticResource PrimaryGradientStart}" Offset="0.0" />
+                    <GradientStop Color="{StaticResource PrimaryGradientEnd}" Offset="1.0" />
+                </LinearGradientBrush>
+            </BoxView.Background>
+        </BoxView>
+
+        <!-- 2. المحتوى الرئيسي للصفحة -->
+        <ScrollView Grid.Row="0" Grid.RowSpan="2">
+            <VerticalStackLayout Spacing="10" Padding="10">
+
+                <!-- رأس الصفحة: اسم الموظف -->
+                <StackLayout Orientation="Horizontal" Spacing="15" Margin="15,30,15,20">
+                    <Image HeightRequest="70">
+                        <Image.Source>
+                            <FontImageSource Glyph="&#xf007;" FontFamily="FontAwesomeSolid" Size="70" Color="{StaticResource PrimaryTextColor}"/>
+                        </Image.Source>
+                    </Image>
+                    <Label Text="{Binding EmployeeName}" 
+                           TextColor="{StaticResource PrimaryTextColor}"
+                           FontSize="32"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center"/>
+                </StackLayout>
+
+                <!-- بطاقة الراتب الشهري -->
+                <Border Style="{StaticResource CardBorderStyle}">
+                    <Grid ColumnDefinitions="Auto, *" ColumnSpacing="15">
+                        <Image HeightRequest="40">
+                            <Image.Source>
+                                <FontImageSource Glyph="&#xf53a;" FontFamily="FontAwesomeSolid" Size="40" Color="{StaticResource AccentColor}"/>
+                            </Image.Source>
+                        </Image>
+                        <VerticalStackLayout Grid.Column="1">
+                            <Label Text="الراتب الشهري" Style="{StaticResource InfoTitleLabelStyle}" />
+                            <Label Text="{Binding Salary, StringFormat='{0:C}'}" Style="{StaticResource InfoDataLabelStyle}" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+                <!-- بطاقة المبلغ المستحق -->
+                <Border Style="{StaticResource CardBorderStyle}">
+                    <Grid ColumnDefinitions="Auto, *" ColumnSpacing="15">
+                        <Image HeightRequest="40">
+                            <Image.Source>
+                                <FontImageSource Glyph="&#xf4c0;" FontFamily="FontAwesomeSolid" Size="40" Color="{StaticResource AccentColor}"/>
+                            </Image.Source>
+                        </Image>
+                        <VerticalStackLayout Grid.Column="1">
+                            <Label Text="المبلغ المستحق (سلفة)" Style="{StaticResource InfoTitleLabelStyle}" />
+                            <Label Text="{Binding OwedMoney, StringFormat='{0:C}'}" Style="{StaticResource InfoDataLabelStyle}">
+                        
+                            </Label>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+                
+                <!-- بطاقة يوم القبض -->
+                <Border Style="{StaticResource CardBorderStyle}">
+                    <Grid ColumnDefinitions="Auto, *" ColumnSpacing="15">
+                        <Image HeightRequest="40">
+                            <Image.Source>
+                                <FontImageSource Glyph="&#xf073;" FontFamily="FontAwesomeSolid" Size="40" Color="{StaticResource AccentColor}"/>
+                            </Image.Source>
+                        </Image>
+                        <VerticalStackLayout Grid.Column="1">
+                            <Label Text="يوم استلام الراتب من كل شهر" Style="{StaticResource InfoTitleLabelStyle}" />
+                            <Label Style="{StaticResource InfoDataLabelStyle}">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="يوم "/>
+                                        <Span Text="{Binding MoneyDay}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+                <!-- زر إجراء -->
+                <Button Text="تسجيل دفعة جديدة"
+                        BackgroundColor="{StaticResource PrimaryGradientStart}"
+                        TextColor="{StaticResource PrimaryTextColor}"
+                        FontAttributes="Bold"
+                        CornerRadius="25"
+                        HeightRequest="50"
+                        Margin="15,20"/>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

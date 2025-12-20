@@ -26,4 +26,14 @@ public partial class OrdersPage : ContentPage
 		var order = e.SelectedItem as Order;
 	await Navigation.PushAsync(new OrderDetailPage(order, IsHistory));
 	 }
+	 		private async void Back_Clicked(object sender, EventArgs e)
+	{
+		try{
+await Navigation.PopAsync();
+		}
+		catch(Exception ex){
+
+		}
+	}
+
 }

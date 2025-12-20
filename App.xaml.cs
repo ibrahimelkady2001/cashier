@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Net;
 using ATARAXIA;
 using EmbedIO;
 using EmbedIO.Routing;
@@ -18,10 +19,28 @@ public partial class App : Application
         await StartServerAsync();
         // base.OnStart();
     }
-     public async void Init()
+    public async void Init()
     {
         await StartServerAsync();
     }
+       private string GetLocalIPAddress()
+        {
+            string localIP = "127.0.0.1"; // fallback
+            try
+            {
+                var host = Dns.GetHostEntry(Dns.GetHostName());
+                localIP = host
+                    .AddressList
+                    .FirstOrDefault(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)?
+                    .ToString() ?? localIP;
+            }
+            catch(Exception ex)
+        {
+            Debug.WriteLine(ex);
+                // handle exception if needed
+            }
+            return localIP;
+        }
    private async Task StartServerAsync()
     {
 
@@ -31,7 +50,8 @@ public partial class App : Application
               {
 
 
-                  var url = $"http://192.168.1.4:7084/";// You can change the port if needed
+                 string ip = GetLocalIPAddress();
+            var url = $"http://{ip}:7084/";
 
                   var server = new WebServer(o => o
              .WithUrlPrefix(url)
@@ -70,7 +90,7 @@ public partial class App : Application
         {
            var products=	HandleData.GetElement<List<Product>>.GetItem("Products") ?? new List<Product>();
 		var names = products?.Select(x => x.ProudctId).ToList();
-			if (names.Contains(product.ProudctId))
+			if (names.Contains(product.ProudctId ) && products.Find(p=>p.ProudctName == product.ProudctName) != null)
 			{
 				var ind = names.IndexOf(product.ProudctId);
 				products[ind] = product;
@@ -101,6 +121,23 @@ public partial class App : Application
 
             });
         }
+          [Route(HttpVerbs.Post, "/print")]
+        public bool print([JsonData] Dictionary<string,string> dic )
+        {
+var quantity =  dic["quantity"];
+var barcodee = dic["barcode"];
+
+		if (double.TryParse(quantity, out double value)){
+for (int i = 0; i < value; i++)
+{
+    var barcode = new BarcodePrinter(){};
+	barcode.PrintBarcode(barcodee ,.75);
+}
+		}
+        return true;
+			}
+    
+        
         [Route(HttpVerbs.Post, "/GetProductInfo")]
         public Product GetProductInfo([JsonData] Dictionary<string,string> dic )
         {
@@ -115,9 +152,13 @@ public partial class App : Application
                 }
                 else if (product.SubProduct != null)
                 {
-                    if (product.SubProduct.ProudctName == barcodeNumber)
+                    if (product.SubProduct.ProudctName == barcodeNumber    )
                     {
                         return product.SubProduct;
+                    }
+                    else if (product.SubProduct.ProudctId  == barcodeNumber)
+                    {
+                          return product.SubProduct;
                     }
 
                 }
@@ -126,8 +167,37 @@ public partial class App : Application
         }
         
 
-    
+
+
+          [Route(HttpVerbs.Post, "/GetProducts")]
+        public List< Product> GetProducts()
+        {
+           
+            List<Product> AllProducts = new List<Product>();
+  //    displayalaert(barcodeNumber);
+            var Products = HandleData.GetElement<List<Product>>.GetItem("Products") ?? new List<Product>();
+            foreach (var product in Products)
+            {
+                AllProducts.Add(product);
+             if (product.SubProduct != null)
+                {
+                    var subproduct = new Product()
+                    {
+                        ProudctName = product.SubProduct.ProudctName,
+                        ProudctPrice = product.SubProduct.ProudctPrice,
+ProudctId = product.SubProduct.ProudctId
+
+                    };
+                    AllProducts.Add(subproduct);
+                }
+                
+            }
+            return AllProducts;
+        }
+        
 }
+    
+
     
     
     protected override Window CreateWindow(IActivationState? activationState)

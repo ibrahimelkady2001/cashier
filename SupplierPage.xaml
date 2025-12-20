@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Cashier.SupplierPage"
+                xmlns:appMaker="clr-namespace:Cashier"
+             Title="SupplierPage">
+     <ScrollView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+        <VerticalStackLayout Spacing="20" Padding="20">
+<Button Text ="Back" TextColor ="Black" HorizontalOptions="Start" Clicked="Back_Clicked" />
+            <!-- Product Name -->
+            <Border StrokeShape="RoundRectangle 10" 
+                    StrokeThickness="1" 
+                    Stroke="#ccc" 
+                    BackgroundColor="White" 
+                    Padding="10">
+                <HorizontalStackLayout>
+                    <Label Text="ادخل اسم الموزع"
+                           FontSize="16" 
+                           TextColor="#333" 
+                           VerticalTextAlignment="Center" />
+                    <Entry x:Name="SupplierNameEntry" 
+                           Placeholder="ادخل اسم الموزع"
+                           FontSize="16" 
+                           TextColor="#333" 
+                           WidthRequest="200" 
+                           Margin="10,0,0,0" />
+                </HorizontalStackLayout>
+            </Border>
+              <Border StrokeShape="RoundRectangle 10" 
+                    StrokeThickness="1" 
+                    Stroke="#ccc" 
+                    BackgroundColor="White" 
+                    Padding="10">
+                <HorizontalStackLayout>
+                    <Label Text="العنوان"
+                           FontSize="16" 
+                           TextColor="#333" 
+                           VerticalTextAlignment="Center" />
+                    <Entry x:Name="AddressEntry" 
+                           Placeholder="العنوان"
+                           FontSize="16" 
+                           TextColor="#333" 
+                           WidthRequest="200" 
+                           Margin="10,0,0,0" />
+                </HorizontalStackLayout>
+            </Border>
+               <Border StrokeShape="RoundRectangle 10" 
+                    StrokeThickness="1" 
+                    Stroke="#ccc" 
+                    BackgroundColor="White" 
+                    Padding="10">
+                <HorizontalStackLayout>
+                    <Label Text="رقم التليفون"
+                           FontSize="16" 
+                           TextColor="#333" 
+                           VerticalTextAlignment="Center" />
+                    <Entry x:Name="PhoneEntry" 
+                           Placeholder="رقم التليفون"
+                           FontSize="16" 
+                           TextColor="#333" 
+                           WidthRequest="200" 
+                           Margin="10,0,0,0" />
+                </HorizontalStackLayout>
+            </Border>
+  <Border StrokeShape="RoundRectangle 10" 
+                    StrokeThickness="1" 
+                    Stroke="#ccc" 
+                    BackgroundColor="White" 
+                    Padding="10">
+                <HorizontalStackLayout>
+                    <Label Text="المبلغ المتبقى له"
+                           FontSize="16" 
+                           TextColor="#333" 
+                           VerticalTextAlignment="Center" />
+                    <Entry x:Name="MoneyEntry" 
+                           Placeholder="المبلغ المتبقى له"
+                           FontSize="16" 
+                           TextColor="#333" 
+                           WidthRequest="200" 
+                           Margin="10,0,0,0" />
+                </HorizontalStackLayout>
+            </Border>
+              <Border StrokeShape="RoundRectangle 10" 
+                    StrokeThickness="1" 
+                    Stroke="#ccc" 
+                    BackgroundColor="White" 
+                    Padding="10">
+                <HorizontalStackLayout>
+                    <Label Text="موعد الاستحقاق"
+                           FontSize="16" 
+                           TextColor="#333" 
+                           VerticalTextAlignment="Center" />
+               <DatePicker  x:Name="Moneydate"></DatePicker>
+                </HorizontalStackLayout>
+            </Border>
+                   <ListView Grid.Row="0"  
+                  x:Name="ProductsListView"  IsPullToRefreshEnabled="True"
+                  HasUnevenRows="True"  ItemTapped="ProductsListView_ItemTapped" CachingStrategy="RecycleElementAndDataTemplate"
+                  SeparatorVisibility="None" 
+                  Margin="10">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="appMaker:Product">
+                    <ViewCell>
+                        <Border StrokeShape="RoundRectangle 10" 
+                                StrokeThickness="1" 
+                                Stroke="#ccc" 
+                                BackgroundColor="White" 
+                                Padding="15" 
+                                Margin="5">
+                            <Grid ColumnDefinitions="*, *, *, *, *,*">
+                                <!-- Product Name -->
+                                <Label Grid.Column="0" 
+                                       Text="{Binding ProudctName}" 
+                                       FontSize="16" 
+                                       FontAttributes="Bold" 
+                                       TextColor="#333" 
+                                       VerticalOptions="Center" />
+
+                                <!-- Product ID -->
+                                <Label Grid.Column="1" 
+                                       Text="{Binding  ProudctId}" 
+                                       FontSize="14" 
+                                       TextColor="#666" 
+                                       VerticalOptions="Center" 
+                                       HorizontalTextAlignment="Center" />
+
+                                <!-- Price -->
+                                <Label Grid.Column="2" 
+                                       Text="{Binding ProudctPrice, StringFormat='جنية {0}'}" 
+                                       FontSize="14" 
+                                       TextColor="#2196f3" 
+                                       VerticalOptions="Center" 
+                                       HorizontalTextAlignment="Center" />
+
+                                <!-- Quantity -->
+                                <Label Grid.Column="3" 
+                                       Text="{Binding Quantity, StringFormat='{0} قطعة'}" 
+                                       FontSize="14" 
+                                       TextColor="#4caf50" 
+                                       VerticalOptions="Center" 
+                                       HorizontalTextAlignment="Center" />
+
+                                <!-- Supplier Name -->
+                                <Label Grid.Column="4" 
+                                       Text="{Binding  SupplierName}" 
+                                       FontSize="14" 
+                                       TextColor="#ff9800" 
+                                       VerticalOptions="Center" 
+                                       HorizontalTextAlignment="End" />
+                                                         <Label Grid.Column="4" 
+                                       Text="{Binding  ProudctCategory}" 
+                                       FontSize="14" 
+                                       TextColor="#ff9800" 
+                                       VerticalOptions="Center" 
+                                       HorizontalTextAlignment="End" />
+                            </Grid>
+                        </Border>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+<StackLayout Orientation="Horizontal" Spacing="9">
+            <!-- Add Product Button -->
+            <Border StrokeShape="RoundRectangle 25" 
+                    StrokeThickness="1" 
+                    Stroke="#fff" 
+                    BackgroundColor="#4caf50" 
+                    Padding="15" 
+                    HorizontalOptions="Center" 
+                    WidthRequest="200">
+                <Button Text="اضافة موزع"  x:Name="addproductbut"
+                        FontSize="18" 
+                        TextColor="White" 
+                        BackgroundColor="#4caf50" 
+                        BorderColor="#4caf50" 
+                        CornerRadius="25" 
+                        WidthRequest="200" 
+                        HeightRequest="50" 
+                        Clicked="Add_Or_Modify_Clicked" />
+            </Border>
+    <Border StrokeShape="RoundRectangle 25"  IsVisible="False"
+                    StrokeThickness="1" x:Name="delproductbor"
+                    Stroke="#fff" 
+                    BackgroundColor="Red" 
+                    Padding="15" 
+                    HorizontalOptions="Center" 
+                    WidthRequest="200">
+                <Button Text="حذف الموزع" x:Name="delproductbut"
+                        FontSize="18" 
+                        TextColor="White" 
+                        BackgroundColor="Red" 
+                        BorderColor="Red" 
+                        CornerRadius="25" 
+                        WidthRequest="200" 
+                        HeightRequest="50" 
+                        Clicked="Del_Clicked" />
+            </Border>
+            </StackLayout>
+            </VerticalStackLayout>
+            </ScrollView>
+   
+</ContentPage>

@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Maui;
+using DotNet.Meteor.HotReload.Plugin;
 using Microsoft.Extensions.Logging;
+using Syncfusion.Maui.Toolkit.Hosting;
 
 namespace Cashier;
 
@@ -9,16 +11,14 @@ public static class MauiProgram
     {
         var builder = MauiApp.CreateBuilder();
         builder
-            .UseMauiApp<App>().UseMauiCommunityToolkit()
+            .UseMauiApp<App>().UseMauiCommunityToolkit().EnableHotReload().ConfigureSyncfusionToolkit()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-            });
+            })
 
-#if DEBUG
-   //     builder.Logging.AddDebug();
-#endif
+;
 
         return builder.Build();
     }

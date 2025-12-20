@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Cashier.OrderDetailPage" xmlns:appMaker="clr-namespace:Cashier"  x:DataType="appMaker:Order"
+             x:Class="Cashier.OrderDetailPageHistory" xmlns:appMaker="clr-namespace:Cashier"  x:DataType="appMaker:Order"
              Title="OrderDetailPage">
    <StackLayout>
     <Button Text ="Back" TextColor ="Black" HorizontalOptions="Start" Clicked="Back_Clicked" />
@@ -41,11 +41,12 @@
 
                                 <!-- Quantity Input -->
                                 <Entry  Text="{Binding quant,Mode=TwoWay}" 
-                                   IsReadOnly="True"
+                                 
                                     Keyboard="Numeric" 
                                     Placeholder="Quantity" 
                                     WidthRequest="100" 
                                     VerticalOptions="Center" />
+                                    <Button BackgroundColor="Red" TextColor="White" Text="مسح"></Button>
                                   
                             </StackLayout>
                         </ViewCell>

@@ -1,0 +1,166 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Cashier.OrderHistoryPage"
+             Title="Order History"
+             BackgroundColor="#F5F5F5">
+    
+    <Grid RowDefinitions="Auto,*" RowSpacing="0">
+        
+        <!-- Search Bar Section -->
+        <Border Grid.Row="0"
+                BackgroundColor="White"
+                StrokeThickness="0"
+                Padding="15"
+                Margin="0,0,0,10"
+                Shadow="{Shadow Brush=Black, Opacity=0.1, Radius=5, Offset='0,2'}">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="0,0,12,12"/>
+            </Border.StrokeShape>
+            
+            <VerticalStackLayout Spacing="10">
+                <Label Text="Search Orders" 
+                       FontSize="18" 
+                       FontAttributes="Bold"
+                       TextColor="#333333"/>
+                
+                <SearchBar x:Name="OrderSearchBar"
+                           Placeholder="Search by Order ID, Employee, or Amount..."
+                           TextChanged="OnSearchTextChanged"
+                           SearchButtonPressed="OnSearchButtonPressed"
+                           BackgroundColor="#F8F9FA"
+                           PlaceholderColor="#999999"
+                           TextColor="#333333"
+                           CancelButtonColor="#2196F3"/>
+            </VerticalStackLayout>
+        </Border>
+
+        <!-- Order List Section -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="15" Spacing="15">
+                
+                <!-- Results Count -->
+                <Label Text="{Binding ResultsText}" 
+                       FontSize="14"
+                       TextColor="#666666"
+                       Margin="5,0,0,0"/>
+                
+                <!-- Order List -->
+                <CollectionView ItemsSource="{Binding FilteredOrders}"
+                                SelectionMode="None">
+                    <CollectionView.EmptyView>
+                        <VerticalStackLayout Padding="40" 
+                                           Spacing="15"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center">
+                            <Label Text="📋" 
+                                   FontSize="48"
+                                   HorizontalTextAlignment="Center"/>
+                            <Label Text="No orders found" 
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="#666666"
+                                   HorizontalTextAlignment="Center"/>
+                            <Label Text="Try a different search term" 
+                                   FontSize="14"
+                                   TextColor="#999999"
+                                   HorizontalTextAlignment="Center"/>
+                        </VerticalStackLayout>
+                    </CollectionView.EmptyView>
+                    
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border BackgroundColor="White"
+                                    StrokeThickness="0"
+                                    Padding="20"
+                                    Margin="0,5"
+                                    Shadow="{Shadow Brush=Black, Opacity=0.08, Radius=8, Offset='0,2'}">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12"/>
+                                </Border.StrokeShape>
+                                
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnOrderTapped" 
+                                                        CommandParameter="{Binding .}"/>
+                                </Border.GestureRecognizers>
+                                
+                                <Grid ColumnDefinitions="*,Auto" 
+                                      ColumnSpacing="15"
+                                      RowDefinitions="Auto,Auto,Auto,Auto"
+                                      RowSpacing="8">
+                                    
+                                    <!-- Order ID -->
+                                    <Label Text="{Binding OrderId}" 
+                                           Grid.Row="0"
+                                           Grid.Column="0"
+                                           FontSize="18"
+                                           FontAttributes="Bold"
+                                           TextColor="#333333"/>
+                                    
+                                    <!-- Total Amount -->
+                                    <Border Grid.Row="0"
+                                            Grid.Column="1"
+                                            BackgroundColor="#E8F5E9"
+                                            StrokeThickness="0"
+                                            Padding="12,6">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="6"/>
+                                        </Border.StrokeShape>
+                                        <Label Text="{Binding Total, StringFormat='${0:N2}'}" 
+                                               FontSize="16"
+                                               FontAttributes="Bold"
+                                               TextColor="#2E7D32"/>
+                                    </Border>
+                                    
+                                    <!-- Order Date & Time -->
+                                    <HorizontalStackLayout Grid.Row="1"
+                                                         Grid.Column="0"
+                                                         Grid.ColumnSpan="2"
+                                                         Spacing="8">
+                                        <Label Text="📅" FontSize="14"/>
+                                        <Label Text="{Binding OrderDate, StringFormat='{0:MMM dd, yyyy}'}" 
+                                               FontSize="14"
+                                               TextColor="#666666"/>
+                                        <Label Text="🕐" FontSize="14"/>
+                                        <Label Text="{Binding OrderDate, StringFormat='{0:hh:mm tt}'}" 
+                                               FontSize="14"
+                                               TextColor="#666666"/>
+                                    </HorizontalStackLayout>
+                                    
+                                    <!-- Employee Name -->
+                                    <HorizontalStackLayout Grid.Row="2"
+                                                         Grid.Column="0"
+                                                         Grid.ColumnSpan="2"
+                                                         Spacing="8">
+                                        <Label Text="👤" FontSize="14"/>
+                                        <Label Text="{Binding EmployeeName}" 
+                                               FontSize="14"
+                                               TextColor="#666666"/>
+                                    </HorizontalStackLayout>
+                                    
+                                    <!-- Product Count -->
+                                    <HorizontalStackLayout Grid.Row="3"
+                                                         Grid.Column="0"
+                                                         Grid.ColumnSpan="2"
+                                                         Spacing="8">
+                                        <Label Text="🛒" FontSize="14"/>
+                                        <Label FontSize="14"
+                                               TextColor="#666666">
+                                            <Label.Text>
+                                                <MultiBinding StringFormat="{}{0} item(s)">
+                                                    <Binding Path="Products.Count" />
+                                                </MultiBinding>
+                                            </Label.Text>
+                                        </Label>
+                                    </HorizontalStackLayout>
+                                    
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                
+            </VerticalStackLayout>
+        </ScrollView>
+        
+    </Grid>
+</ContentPage>

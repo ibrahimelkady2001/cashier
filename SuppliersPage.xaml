@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Cashier.SuppliersPage"
+                xmlns:appMaker="clr-namespace:Cashier"
+             Title="SuppliersPage">
+             <ScrollView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+             <StackLayout   VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                <Button Text ="Back" TextColor ="Black" HorizontalOptions="Start" Clicked="Back_Clicked" />
+<SearchBar BackgroundColor="White" TextColor="Black" TextChanged="SearchBar_TextChanged" x:Name="SearchBar"></SearchBar>
+       
+<ListView HorizontalOptions="CenterAndExpand" ItemTapped="ListView_ItemTapped" x:Name="SuppliersListView" HasUnevenRows="True">
+    <ListView.ItemTemplate>
+        <DataTemplate  x:DataType="appMaker:Supplier">
+            <ViewCell>
+<Label FontSize="32"  Text="{Binding Name}"></Label>
+            </ViewCell>
+        </DataTemplate>
+    </ListView.ItemTemplate>
+</ListView>
+   <Border Grid.Row="1" 
+                StrokeShape="RoundRectangle 25" 
+                StrokeThickness="1" 
+                Stroke="#fff" 
+                BackgroundColor="#4caf50" 
+                Padding="15" 
+                HorizontalOptions="Center" 
+                VerticalOptions="End" 
+                Margin="20">
+            <Button Text="اضافة موزع"
+                    FontSize="18" 
+                    TextColor="White" 
+                    BackgroundColor="#4caf50" 
+                    BorderColor="#4caf50" 
+                    CornerRadius="25" 
+                    WidthRequest="200" 
+                    HeightRequest="50" 
+                    Clicked="Add_Clicked" />
+        </Border>
+      </StackLayout>
+      </ScrollView>
+</ContentPage>

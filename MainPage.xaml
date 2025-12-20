@@ -80,6 +80,9 @@
                     Stroke="#ff9800" 
                     BackgroundColor="White" 
                     Padding="15">
+                       <Border.Behaviors>
+                        <toolkit:TouchBehavior PressedScale =".9" PressedOpacity=".9" TouchGestureCompleted="Suppliers_TouchGestureCompleted"></toolkit:TouchBehavior>
+                    </Border.Behaviors>
                 <VerticalStackLayout FlowDirection="RightToLeft">
                     <Label Text="الموردين" 
                            FontSize="24" 
@@ -97,6 +100,7 @@
                     Stroke="#f44336" 
                     BackgroundColor="White" 
                     Padding="15">
+              
                 <VerticalStackLayout>
                     <Label Text="المسترجعين" 
                            FontSize="24" 
@@ -112,8 +116,12 @@
             <Border StrokeShape="RoundRectangle 15" 
                     StrokeThickness="2" 
                     Stroke="#9c27b0" 
-                    BackgroundColor="White" 
+                    BackgroundColor="White"
+
                     Padding="15">
+                                   <Border.Behaviors>
+                        <toolkit:TouchBehavior PressedScale =".9" PressedOpacity=".9" TouchGestureCompleted="Employees_TouchGestureCompleted"></toolkit:TouchBehavior>
+                    </Border.Behaviors>
                 <VerticalStackLayout>
                     <Label Text="الموظفين" 
                            FontSize="24" 
@@ -124,7 +132,44 @@
                            TextColor="#666" />
                 </VerticalStackLayout>
             </Border>
+            <Border StrokeShape="RoundRectangle 15" 
+                    StrokeThickness="2" 
+                    Stroke="Brown" 
+                    BackgroundColor="White"
 
+                    Padding="15">
+                                   <Border.Behaviors>
+                        <toolkit:TouchBehavior PressedScale =".9" PressedOpacity=".9" TouchGestureCompleted="Expanses_TouchGestureCompleted"></toolkit:TouchBehavior>
+                    </Border.Behaviors>
+                <VerticalStackLayout>
+                    <Label Text="ادارة المنصرف" 
+                           FontSize="24" 
+                           FontAttributes="Bold" 
+                           TextColor="Brown" />
+                    <Label Text= "المنصرف"
+                           FontSize="18" 
+                           TextColor="#666" />
+                </VerticalStackLayout>
+            </Border>
+                      <Border StrokeShape="RoundRectangle 15" 
+                    StrokeThickness="2" 
+                    Stroke="Black" 
+                    BackgroundColor="White"
+
+                    Padding="15">
+                                   <Border.Behaviors>
+                        <toolkit:TouchBehavior PressedScale =".9" PressedOpacity=".9" TouchGestureCompleted="Transactions_TouchGestureCompleted"></toolkit:TouchBehavior>
+                    </Border.Behaviors>
+                <VerticalStackLayout>
+                    <Label Text=" ادارة الايراد"
+                           FontSize="24" 
+                           FontAttributes="Bold" 
+                           TextColor="Black" />
+                    <Label Text= "الايراد"
+                           FontSize="18" 
+                           TextColor="#666" />
+                </VerticalStackLayout>
+            </Border>
             <!-- Attendance Section -->
             <Border StrokeShape="RoundRectangle 15" 
                     StrokeThickness="2" 

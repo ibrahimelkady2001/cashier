@@ -1,0 +1,311 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+          xmlns:picker="clr-namespace:Syncfusion.Maui.Toolkit.Picker;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             x:Class="Cashier.TransactionSummaryPage"
+             Title="Transaction Summary"
+             BackgroundColor="#F5F5F5">
+    
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+            
+            <!-- Net Total Card -->
+            <Border BackgroundColor="White" 
+                    StrokeThickness="0"
+                    Padding="25"
+                    Shadow="{Shadow Brush=Black, Opacity=0.1, Radius=10, Offset='0,2'}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12"/>
+                </Border.StrokeShape>
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Net Total" 
+                           FontSize="16" 
+                           TextColor="#666666"/>
+                    <Label Text="{Binding TotalAmount, StringFormat='${0:N2}'}" 
+                           FontSize="42" 
+                           FontAttributes="Bold"
+                           TextColor="#2E7D32"/>
+                    <Label FontSize="14" 
+                           TextColor="#999999">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{Binding StartDate, StringFormat='{0:MMM dd, yyyy}'}"/>
+                                <Span Text=" - "/>
+                                <Span Text="{Binding EndDate, StringFormat='{0:MMM dd, yyyy}'}"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Sales and Expenses Summary -->
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                <!-- Sales Card -->
+                <Border Grid.Column="0"
+                        BackgroundColor="White" 
+                        StrokeThickness="0"
+                        Padding="20"
+                        Shadow="{Shadow Brush=Black, Opacity=0.1, Radius=10, Offset='0,2'}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="12"/>
+                    </Border.StrokeShape>
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="💰 Sales" 
+                               FontSize="14" 
+                               TextColor="#666666"/>
+                        <Label Text="{Binding TotalSales, StringFormat='${0:N2}'}" 
+                               FontSize="24" 
+                               FontAttributes="Bold"
+                               TextColor="#2E7D32"/>
+                        <Label Text="{Binding OrderCount, StringFormat='{0} Orders'}" 
+                               FontSize="12" 
+                               TextColor="#999999"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Expenses Card -->
+                <Border Grid.Column="1"
+                        BackgroundColor="White" 
+                        StrokeThickness="0"
+                        Padding="20"
+                        Shadow="{Shadow Brush=Black, Opacity=0.1, Radius=10, Offset='0,2'}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="12"/>
+                    </Border.StrokeShape>
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="📤 Expenses" 
+                               FontSize="14" 
+                               TextColor="#666666"/>
+                        <Label Text="{Binding TotalExpenses, StringFormat='${0:N2}'}" 
+                               FontSize="24" 
+                               FontAttributes="Bold"
+                               TextColor="#D32F2F"/>
+                        <Label Text="{Binding ExpenseCount, StringFormat='{0} Items'}" 
+                               FontSize="12" 
+                               TextColor="#999999"/>
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+            <!-- Quick Select Buttons -->
+            <Border BackgroundColor="White" 
+                    StrokeThickness="0"
+                    Padding="20"
+                    Shadow="{Shadow Brush=Black, Opacity=0.1, Radius=10, Offset='0,2'}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12"/>
+                </Border.StrokeShape>
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="Quick Select" 
+                           FontSize="18" 
+                           FontAttributes="Bold"
+                           TextColor="#333333"/>
+                    
+                    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
+                        <Button Text="Today" 
+                                Grid.Column="0"
+                                BackgroundColor="#2196F3"
+                                TextColor="White"
+                                CornerRadius="8"
+                                Clicked="OnTodayClicked"
+                                HeightRequest="45"/>
+                        
+                        <Button Text="Last 30 Days" 
+                                Grid.Column="1"
+                                BackgroundColor="#2196F3"
+                                TextColor="White"
+                                CornerRadius="8"
+                                Clicked="OnLast30DaysClicked"
+                                HeightRequest="45"/>
+                        
+                        <Button Text="Last Month" 
+                                Grid.Column="2"
+                                BackgroundColor="#2196F3"
+                                TextColor="White"
+                                CornerRadius="8"
+                                Clicked="OnLastMonthClicked"
+                                HeightRequest="45"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Custom Date Range -->
+            <Border BackgroundColor="White" 
+                    StrokeThickness="0"
+                    Padding="20"
+                    Shadow="{Shadow Brush=Black, Opacity=0.1, Radius=10, Offset='0,2'}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12"/>
+                </Border.StrokeShape>
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="Custom Date Range" 
+                           FontSize="18" 
+                           FontAttributes="Bold"
+                           TextColor="#333333"/>
+                    
+                    <!-- Start Date -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Start Date" 
+                               FontSize="14" 
+                               TextColor="#666666"/>
+                        <picker:SfDatePicker x:Name="StartDatePicker"
+                                           SelectedDate="{Binding StartDate, Mode=TwoWay}"
+                                           SelectionChanged="OnStartDateChanged"
+                                           HeightRequest="50"
+                                           BackgroundColor="#F8F9FA"
+                                           MinimumDate="1/1/2020"
+                                           MaximumDate="{Binding EndDate}">
+                            <picker:SfDatePicker.HeaderView>
+                                <picker:PickerHeaderView Height="40" 
+                                                       Text="Select Start Date"
+                                                       Background="#2196F3"/>
+                            </picker:SfDatePicker.HeaderView>
+                        </picker:SfDatePicker>
+                    </VerticalStackLayout>
+
+                    <!-- End Date -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="End Date" 
+                               FontSize="14" 
+                               TextColor="#666666"/>
+                        <picker:SfDatePicker x:Name="EndDatePicker"
+                                           SelectedDate="{Binding EndDate, Mode=TwoWay}"
+                                           SelectionChanged="OnEndDateChanged"
+                                           HeightRequest="50"
+                                           BackgroundColor="#F8F9FA"
+                                           MinimumDate="{Binding StartDate}">
+                            <picker:SfDatePicker.HeaderView>
+                                <picker:PickerHeaderView Height="40" 
+                                                       Text="Select End Date"
+                                                       Background="#2196F3"/>
+                            </picker:SfDatePicker.HeaderView>
+                        </picker:SfDatePicker>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Transaction History List -->
+            <Border BackgroundColor="White" 
+                    StrokeThickness="0"
+                    Padding="20"
+                    Shadow="{Shadow Brush=Black, Opacity=0.1, Radius=10, Offset='0,2'}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12"/>
+                </Border.StrokeShape>
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="Transaction History" 
+                           FontSize="18" 
+                           FontAttributes="Bold"
+                           TextColor="#333333"/>
+                    
+                    <CollectionView ItemsSource="{Binding FilteredOrders}"
+                                    SelectionMode="None">
+                        <CollectionView.EmptyView>
+                            <VerticalStackLayout Padding="20" 
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center">
+                                <Label Text="No transactions found for selected date range" 
+                                       FontSize="14"
+                                       TextColor="#999999"
+                                       HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+                        </CollectionView.EmptyView>
+                        
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Padding="15"
+                                        Margin="0,5"
+                                        StrokeThickness="0">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="8"/>
+                                    </Border.StrokeShape>
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsTransaction}" Value="True">
+                                            <Setter Property="BackgroundColor" Value="#FFEBEE"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsTransaction}" Value="False">
+                                            <Setter Property="BackgroundColor" Value="#F8F9FA"/>
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                    
+                                    <Grid ColumnDefinitions="Auto,*,Auto" 
+                                          ColumnSpacing="15"
+                                          RowDefinitions="Auto,Auto,Auto"
+                                          RowSpacing="5">
+                                        
+                                        <!-- Type Icon -->
+                                        <Label Grid.Row="0"
+                                               Grid.Column="0"
+                                               Grid.RowSpan="3"
+                                               FontSize="32"
+                                               VerticalTextAlignment="Center">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsTransaction}" Value="True">
+                                                    <Setter Property="Text" Value="📤"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsTransaction}" Value="False">
+                                                    <Setter Property="Text" Value="💰"/>
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                        
+                                        <!-- Order ID or Transaction Type -->
+                                        <Label Grid.Row="0"
+                                               Grid.Column="1"
+                                               FontSize="16"
+                                               FontAttributes="Bold"
+                                               TextColor="#333333">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsTransaction}" Value="True">
+                                                    <Setter Property="Text" Value="{Binding TransactionType}"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsTransaction}" Value="False">
+                                                    <Setter Property="Text" Value="{Binding OrderId}"/>
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                        
+                                        <!-- Amount -->
+                                        <Label Grid.Row="0"
+                                               Grid.Column="2"
+                                               FontSize="18"
+                                               FontAttributes="Bold"
+                                               HorizontalTextAlignment="End">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsTransaction}" Value="True">
+                                                    <Setter Property="Text" Value="{Binding TransactionAmount, StringFormat='${0:N2}'}"/>
+                                                    <Setter Property="TextColor" Value="#D32F2F"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsTransaction}" Value="False">
+                                                    <Setter Property="Text" Value="{Binding Total, StringFormat='${0:N2}'}"/>
+                                                    <Setter Property="TextColor" Value="#2E7D32"/>
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                        
+                                        <!-- Date -->
+                                        <Label Text="{Binding OrderDate, StringFormat='{0:MMM dd, yyyy - hh:mm tt}'}" 
+                                               Grid.Row="1"
+                                               Grid.Column="1"
+                                               Grid.ColumnSpan="2"
+                                               FontSize="13"
+                                               TextColor="#666666"/>
+                                        
+                                        <!-- Employee Name -->
+                                        <Label Text="{Binding EmployeeName, StringFormat='Employee: {0}'}" 
+                                               Grid.Row="2"
+                                               Grid.Column="1"
+                                               Grid.ColumnSpan="2"
+                                               FontSize="13"
+                                               TextColor="#999999"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

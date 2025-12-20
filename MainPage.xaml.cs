@@ -26,10 +26,20 @@ public partial class MainPage : ContentPage
         base.OnAppearing();
     }
 
-
+   private async void Employees_TouchGestureCompleted(object sender, CommunityToolkit.Maui.Core.TouchGestureCompletedEventArgs e)
+    {
+        await Navigation.PushAsync(new EmployeesListPage());
+    }
    
 
-  
+     private async void Expanses_TouchGestureCompleted(object sender, CommunityToolkit.Maui.Core.TouchGestureCompletedEventArgs e)
+    {
+        await Navigation.PushAsync(new  ExpensePage());
+    }
+       private async void Transactions_TouchGestureCompleted(object sender, CommunityToolkit.Maui.Core.TouchGestureCompletedEventArgs e)
+    {
+        await Navigation.PushAsync(new TransactionSummaryPage());
+    }
     private async void Inventory_TouchGestureCompleted(object sender, CommunityToolkit.Maui.Core.TouchGestureCompletedEventArgs e)
     {
         await Navigation.PushAsync(new InventoryPage());
@@ -42,6 +52,11 @@ public partial class MainPage : ContentPage
  private async void OrdersHistory_Tapped(object sender, TappedEventArgs e)
     {
         await Navigation.PushAsync(new OrdersPage(true));
+    }
+
+    private async void Suppliers_TouchGestureCompleted(object sender, CommunityToolkit.Maui.Core.TouchGestureCompletedEventArgs e)
+    {
+      await  Navigation.PushAsync(new SuppliersPage());
     }
     
 }

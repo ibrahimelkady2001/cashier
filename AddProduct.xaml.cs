@@ -1,27 +1,39 @@
 using System.Threading.Tasks;
 using ATARAXIA;
+using ESCPOS_NET;
+using ESCPOS_NET.Emitters;
+using ESCPOS_NET.Utilities;
+
 
 namespace Cashier;
 
 public partial class AddProduct : ContentPage
 {
-	public  Product product = new Product();
+	public  Product productt = new Product();
 	bool IsProductDetail = false;
 	public AddProduct(Product product = null)
 	{
 		InitializeComponent();
+		categoryPicker.ItemsSource =Enum.GetNames(typeof(ProductCategory));
+		SupplierPicker.ItemsSource=   (HandleData.GetElement<List<Supplier>>.GetItem("Suppliers") ?? new List<Supplier>()).Select(p=>p.Name).ToList();
+	
 		if (product != null)
 		{
+			productt = product;
+			delproductbor.IsVisible = true;
 			addproductbut.Text = "تعديل المنتج";
 			IsProductDetail = true;
 			ProductNameEntry.Text = product.ProudctName ?? string.Empty;
 			RealPriceEntry.Text = product.RealPrice.ToString() ?? string.Empty;
 			ProductQuantaty.Text = product.Quantity.ToString() ?? string.Empty;
+
+			categoryPicker.SelectedIndex = (int)product.ProudctCategory;
+			SupplierPicker.SelectedItem = product.SupplierName ?? string.Empty;
 			if (product.SubProduct != null)
 			{
 				subcheckbox.IsChecked = true;
 				subname.Text = product.SubProduct.ProudctName;
-				SubProductent.Text = product.SubProduct.ProudctName ?? string.Empty;
+				SubProductbarcode.Text = product.SubProduct.ProudctId ?? string.Empty;
 				SubProductCountent.Text = product.SubProductCount.ToString() ?? string.Empty;
 				var total = product.Quantity;
 				double integerPart = Math.Floor(total); // Get the integer part
@@ -29,37 +41,35 @@ public partial class AddProduct : ContentPage
 				ProductQuantaty.Text = integerPart.ToString();
 				SubProuctQuantatity.Text = Math.Round(decimalPart * product.SubProductCount).ToString();
 				SubProuctQuantatity.IsVisible = true;
-					subpriceent.Text = product.SubProduct.ProudctPrice.ToString() ?? string.Empty;
-		//	SubProuctQuantatity.Text = product.SubProductCount.ToString() ?? string.Empty;
+				subpriceent.Text = product.SubProduct.ProudctPrice.ToString() ?? string.Empty;
+           producttypeent.Text = product.SubProducttype ?? string.Empty;			//	SubProuctQuantatity.Text = product.SubProductCount.ToString() ?? string.Empty;
 			}
-			
+
 			gomlapriceentry.Text = product.GomlaPrice.ToString() ?? string.Empty;
-		
-		
+
+
 			PriceEntry.Text = product.ProudctPrice.ToString() ?? string.Empty;
-		//	SubProuctQuantatity.Text = product.SubProductCount.ToString() ?? string.Empty;
+			//	SubProuctQuantatity.Text = product.SubProductCount.ToString() ?? string.Empty;
 			// ProductQuantityEntry.Text = product.Quantity.ToString() ?? string.Empty;
 			BarcodeEntry.Text = product.ProudctId ?? string.Empty;
 		}
 
+		
+
 	}
-	public static string GenerateRandom8DigitNumber()
-	{
-		Random random = new Random();
-		const string digits = "0123456789";
-		char[] eightDigits = new char[8];
 
-		// Ensure the first digit is not zero to avoid numbers like "01234567"
-		eightDigits[0] = digits[random.Next(1, 10)]; // First digit (1-9)
+	 public static string Generate13DigitNumber()
+    {
+          Random random = new Random();
+        string result = random.Next(100, 999).ToString(); // First 3 digits (non-zero)
 
-		// Fill the remaining 7 digits with random numbers (0-9)
-		for (int i = 1; i < 8; i++)
-		{
-			eightDigits[i] = digits[random.Next(10)]; // Digits (0-9)
-		}
+        for (int i = 0; i < 5; i++) // Remaining 9 digits
+        {
+            result += random.Next(0, 10).ToString();
+        }
 
-		return new string(eightDigits);
-	}
+        return result;
+    }
 	private async void AddProduct_Clicked(System.Object sender, System.EventArgs e)
 	{
 
@@ -67,20 +77,29 @@ public partial class AddProduct : ContentPage
 		{
 			ProudctId = BarcodeEntry.Text,
 			ProudctName = ProductNameEntry.Text,
+	
 			// SubProduct = SubProductent.Text,
 
 			// ProudctPrice = PriceEntry.Text
 			// Quantity = ProductQuantityEntry.Text,
 		};
+		if (categoryPicker.SelectedIndex >= 0)
+		{
+			product.ProudctCategory = (ProductCategory)categoryPicker.SelectedIndex;
+		}
+		if (SupplierPicker.SelectedItem is string str)
+		{
+			product.SupplierName = str;
+		}
 		if (subcheckbox.IsChecked)
 		{
-var SubProduct = new Product(){ProudctId = SubProductent.Text, ProudctPrice = double.Parse(subpriceent.Text),ProudctName = subname.Text };
+			var SubProduct = new Product() { ProudctPrice = double.Parse(subpriceent.Text), ProudctName = subname.Text,ProudctId= SubProductbarcode.Text };
 			var total = double.Parse(ProductQuantaty.Text) + ((double.Parse(SubProuctQuantatity.Text ?? "0") / double.Parse(SubProductCountent.Text ?? "1")));
 			product.Quantity = total;
 			product.SubProduct = SubProduct;
 			product.SubProducttype = producttypeent.Text;
 			product.SubProductCount = int.Parse(SubProductCountent.Text);
-		
+
 		}
 		else
 		{
@@ -107,7 +126,7 @@ var SubProduct = new Product(){ProudctId = SubProductent.Text, ProudctPrice = do
 			await DisplayAlert("معذرة", "قم بادخال سعر صحيح", "اغلاق");
 			allowed = false;
 		}
-		if (double.TryParse(RealPriceEntry.Text, out double Gomlaprice))
+		if (double.TryParse(gomlapriceentry.Text, out double Gomlaprice))
 		{
 			product.GomlaPrice = Gomlaprice;
 		}
@@ -141,15 +160,41 @@ var SubProduct = new Product(){ProudctId = SubProductent.Text, ProudctPrice = do
 		{
 		var products=	HandleData.GetElement<List<Product>>.GetItem("Products") ?? new List<Product>();
 		var names = products?.Select(x => x.ProudctId).ToList();
-			if (names.Contains(product.ProudctId))
+			bool shouldadd = true;
+
+			foreach (var l in products)
 			{
-				var ind = names.IndexOf(product.ProudctId);
-				products[ind] = product;
+				if (l.ProudctId == product.ProudctId && l.ProudctName == product.ProudctName)
+				{
+					l.ProudctPrice = product.ProudctPrice;
+					l.Quantity = product.Quantity;
+					l.quant = product.quant;
+					l.RealPrice = product.SellCount;
+					l.SupplierName = product.SupplierName;
+					l.SubProduct = product.SubProduct;
+					l.SubProductCount = product.SubProductCount;
+					l.SubProducttype = product.SubProducttype;
+					l.ProudctCategory = product.ProudctCategory;
+					shouldadd = false;
+
+					break;   
+
+				}
 			}
-			else
+			if (shouldadd)
 			{
-				products.Add(product);
-		}
+				 	products.Add(product);
+			}
+			// if (names.Contains(product.ProudctId))
+			// {
+
+			// 	var ind = names.IndexOf(product.ProudctId);
+			// 	products[ind] = product;
+			// }
+			// else
+			// {
+			// 	products.Add(product);
+			// }
 			HandleData.AddItemToStorage("Products", products);
 			await Navigation.PopAsync();
 		}
@@ -160,14 +205,17 @@ var SubProduct = new Product(){ProudctId = SubProductent.Text, ProudctPrice = do
 
 	private void GenerateRandomBarcode_Clicked(object sender, EventArgs e)
 	{
+		
 
-		BarcodeEntry.Text = GenerateRandom8DigitNumber();
+		BarcodeEntry.Text = Generate13DigitNumber();
 	}
-	private void GenerateRandoSubBarcode_Clicked(object sender, EventArgs e)
+		private void GenerateRandomSubBarcode_Clicked(object sender, EventArgs e)
 	{
+		
 
-		SubProductent.Text = GenerateRandom8DigitNumber();
+		SubProductbarcode.Text = Generate13DigitNumber();
 	}
+	
 	private async void PrintSticker_Clicked(object sender, EventArgs e)
 	{
 
@@ -183,15 +231,70 @@ var SubProduct = new Product(){ProudctId = SubProductent.Text, ProudctPrice = do
 	{
 		SubProuctQuantatity.Placeholder = e.NewTextValue;
 	}
-
-
-	private void Print_Clicked(object sender, EventArgs e)
+	private async void Del_Clicked(object sender, EventArgs e)
 	{
-		var name = SubProductent.Text;
+	var list =	 HandleData.GetElement<List<Product>>.GetItem("Products") ?? new List<Product>();
+	var newlist = list.Where(p=>p.ProudctId != productt.ProudctId).ToList();
+	HandleData.AddItemToStorage("Products",newlist);
+	await Navigation.PopAsync();
 	}
-	private void PrintMain_Clicked(object sender, EventArgs e)
+
+	private async void Print_Clicked(object sender, EventArgs e)
 	{
+		var name = SubProductbarcode.Text;
+
+
+	
+		string result = "";
+		 await MainThread.InvokeOnMainThreadAsync(async () =>
+        {
+            result = await DisplayPromptAsync("Required", "ادخل الكمية");
+        });
+		if (double.TryParse(result, out double value)){
+for (int i = 0; i < value; i++)
+{
+    var barcode = new BarcodePrinter(){};
+	barcode.PrintBarcode(name ,.75,label:subname.Text);
+}
+		}
+			
+	}
+	private async void PrintMain_Clicked(object sender, EventArgs eE)
+	{
+	
 		var name = BarcodeEntry.Text;
+			
+
+	
+		string result = "";
+		 await MainThread.InvokeOnMainThreadAsync(async () =>
+        {
+            result = await DisplayPromptAsync("Required", "ادخل الكمية");
+        });
+		if (double.TryParse(result, out double value)){
+			
+			
+for (int i = 0; i < value; i++)
+{
+    var barcode = new BarcodePrinter(){};
+	barcode.PrintBarcode(name ,.75,label:ProductNameEntry.Text);
+}
+		}
+			
+    }
+		private async void Back_Clicked(object sender, EventArgs e)
+	{
+		try{
+			InventoryPage.Refresh = false;
+await Navigation.PopAsync();
+		}
+		catch(Exception ex){
+
+		}
+	}
+
+    private void categoryPicker_SelectedIndexChanged(object sender, EventArgs e)
+    {
     }
 		
 	}

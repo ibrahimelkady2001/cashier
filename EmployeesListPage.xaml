@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Cashier.EmployeesListPage"
+      
+             Title="قائمة الموظفين"
+             FlowDirection="RightToLeft"
+             BackgroundColor="#F0F4F8">
+
+
+
+    <ContentPage.Resources>
+        <!-- نفس الألوان والأنماط المستخدمة في صفحة التفاصيل للحفاظ على التناسق -->
+        <Color x:Key="PrimaryGradientStart">#1E3A8A</Color>
+        <Color x:Key="PrimaryGradientEnd">#3B82F6</Color>
+        <Color x:Key="PageBackgroundColor">#F0F4F8</Color>
+        <Color x:Key="CardBackgroundColor">#FFFFFF</Color>
+        <Color x:Key="PrimaryTextColor">#FFFFFF</Color>
+        <Color x:Key="SecondaryTextColor">#4B5563</Color>
+        <Color x:Key="AccentColor">#16A34A</Color> <!-- أخضر للراتب -->
+        <Color x:Key="WarningColor">#DC2626</Color> <!-- أحمر للسلفة -->
+    
+    </ContentPage.Resources>
+     <!-- EmployeesListPage.xaml -->
+
+<!-- ... (نفس الكود السابق) ... -->
+
+    <Grid RowDefinitions="*, *">
+
+        <!-- 1. رأس الصفحة مع تدرج لوني (لا تغيير هنا) -->
+     
+
+        <!-- 2. قائمة الموظفين (لا تغيير هنا) -->
+        <CollectionView HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand" Grid.Row="1" x:Name="ListV"
+                     
+                        SelectionMode="Single"
+                        SelectionChanged="OnEmployeeSelected">
+                        <CollectionView.ItemTemplate>
+                     <DataTemplate>
+        <!-- Use a Border for a modern card-like appearance -->
+        <Border Stroke="LightGray"
+                StrokeThickness="1"
+                BackgroundColor="White"
+                Padding="16"
+                Margin="10,5"
+                StrokeShape="RoundRectangle 10">
+
+            <Label Text="{Binding EmployeeName}"
+                   FontSize="Medium"
+                   FontAttributes="Bold"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Start"
+                   LineBreakMode="TailTruncation" />
+        </Border>
+    </DataTemplate>
+                        </CollectionView.ItemTemplate>
+            <!-- ... (نفس الـ ItemTemplate) ... -->
+        </CollectionView>
+
+        <!-- 3. زر الإضافة العائم (الجزء الجديد) -->
+
+        <Button Grid.Row="1"
+                Text="&#x2b;"
+                FontFamily="FontAwesomeSolid"
+                FontSize="24"
+                TextColor="{StaticResource PrimaryTextColor}"
+                HeightRequest="60"
+                WidthRequest="60"
+                CornerRadius="30"
+                HorizontalOptions="End"
+                VerticalOptions="End"
+                Margin="20"
+                Clicked="OnAddNewEmployeeClicked">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="1,0">
+                    <GradientStop Color="{StaticResource PrimaryGradientStart}" Offset="0.0" />
+                    <GradientStop Color="{StaticResource PrimaryGradientEnd}" Offset="1.0" />
+                </LinearGradientBrush>
+            </Button.Background>
+            <Button.Shadow>
+                <Shadow Brush="#000000" Offset="5,5" Radius="10" Opacity="0.3" />
+            </Button.Shadow>
+        </Button>
+    </Grid>
+
+
+</ContentPage>

@@ -1,0 +1,248 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Cashier.ExpensePage"
+             Title="المنصرف"
+             BackgroundColor="#F5F5F5">
+    
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+            
+            <!-- Header Card -->
+            <Border BackgroundColor="White" 
+                    StrokeThickness="0"
+                    Padding="25"
+                    Shadow="{Shadow Brush=Black, Opacity=0.1, Radius=10, Offset='0,2'}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12"/>
+                </Border.StrokeShape>
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="إضافة منصرف جديد" 
+                           FontSize="24" 
+                           FontAttributes="Bold"
+                           TextColor="#333333"
+                           HorizontalTextAlignment="Center"/>
+                    <Label Text="تسجيل المصروفات والمدفوعات النقدية" 
+                           FontSize="14" 
+                           TextColor="#999999"
+                           HorizontalTextAlignment="Center"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Expense Form Card -->
+            <Border BackgroundColor="White" 
+                    StrokeThickness="0"
+                    Padding="25"
+                    Shadow="{Shadow Brush=Black, Opacity=0.1, Radius=10, Offset='0,2'}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12"/>
+                </Border.StrokeShape>
+                <VerticalStackLayout Spacing="20">
+                    
+                    <!-- Transaction Type -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="نوع المنصرف *" 
+                               FontSize="16" 
+                               FontAttributes="Bold"
+                               TextColor="#333333"/>
+                        <Picker x:Name="TransactionTypePicker"
+                                BackgroundColor="#F8F9FA"
+                                HeightRequest="50"
+                                FontSize="16">
+                            <Picker.Items>
+                                <x:String>رسوم</x:String>
+                                <x:String>تبرع</x:String>
+                                <x:String>مرافق (كهرباء/ماء/غاز)</x:String>
+                                <x:String>رواتب</x:String>
+                                <x:String>إيجار</x:String>
+                                <x:String>صيانة</x:String>
+                                <x:String>مشتريات</x:String>
+                                <x:String>نقليات</x:String>
+                                <x:String>أخرى</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </VerticalStackLayout>
+
+                    <!-- Amount -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="المبلغ *" 
+                               FontSize="16" 
+                               FontAttributes="Bold"
+                               TextColor="#333333"/>
+                        <Border BackgroundColor="#F8F9FA"
+                                StrokeThickness="1"
+                                Stroke="#E0E0E0"
+                                Padding="15,0"
+                                HeightRequest="50">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8"/>
+                            </Border.StrokeShape>
+                            <Entry x:Name="AmountEntry"
+                                   Placeholder="أدخل المبلغ"
+                                   Keyboard="Numeric"
+                                   FontSize="16"
+                                   BackgroundColor="Transparent"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Description/Notes -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="ملاحظات (اختياري)" 
+                               FontSize="16" 
+                               FontAttributes="Bold"
+                               TextColor="#333333"/>
+                        <Border BackgroundColor="#F8F9FA"
+                                StrokeThickness="1"
+                                Stroke="#E0E0E0"
+                                Padding="15"
+                                MinimumHeightRequest="100">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8"/>
+                            </Border.StrokeShape>
+                            <Editor x:Name="NotesEditor"
+                                    Placeholder="أضف أي ملاحظات إضافية هنا"
+                                    FontSize="16"
+                                    BackgroundColor="Transparent"
+                                    AutoSize="TextChanges"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Employee Name -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="اسم الموظف *" 
+                               FontSize="16" 
+                               FontAttributes="Bold"
+                               TextColor="#333333"/>
+                        <Border BackgroundColor="#F8F9FA"
+                                StrokeThickness="1"
+                                Stroke="#E0E0E0"
+                                Padding="15,0"
+                                HeightRequest="50">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8"/>
+                            </Border.StrokeShape>
+                            <Entry x:Name="EmployeeNameEntry"
+                                   Placeholder="اسم الموظف المسؤول"
+                                   FontSize="16"
+                                   BackgroundColor="Transparent"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Error Message -->
+                    <Label x:Name="ErrorLabel"
+                           Text=""
+                           FontSize="14"
+                           TextColor="#D32F2F"
+                           IsVisible="False"
+                           HorizontalTextAlignment="Center"/>
+
+                    <!-- Action Buttons -->
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="15" Margin="0,10,0,0">
+                        <Button Text="حفظ المنصرف"
+                                Grid.Column="0"
+                                BackgroundColor="#D32F2F"
+                                TextColor="White"
+                                FontSize="16"
+                                FontAttributes="Bold"
+                                CornerRadius="8"
+                                HeightRequest="55"
+                                Clicked="OnSaveExpenseClicked"/>
+                        
+                        <Button Text="إلغاء"
+                                Grid.Column="1"
+                                BackgroundColor="#757575"
+                                TextColor="White"
+                                FontSize="16"
+                                FontAttributes="Bold"
+                                CornerRadius="8"
+                                HeightRequest="55"
+                                Clicked="OnCancelClicked"/>
+                    </Grid>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Recent Expenses -->
+            <Border BackgroundColor="White" 
+                    StrokeThickness="0"
+                    Padding="20"
+                    Shadow="{Shadow Brush=Black, Opacity=0.1, Radius=10, Offset='0,2'}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12"/>
+                </Border.StrokeShape>
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="آخر المنصرفات" 
+                           FontSize="18" 
+                           FontAttributes="Bold"
+                           TextColor="#333333"/>
+                    
+                    <CollectionView x:Name="RecentExpensesCollection"
+                                    SelectionMode="None">
+                        <CollectionView.EmptyView>
+                            <VerticalStackLayout Padding="20" 
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center">
+                                <Label Text="لا توجد منصرفات مسجلة" 
+                                       FontSize="14"
+                                       TextColor="#999999"
+                                       HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+                        </CollectionView.EmptyView>
+                        
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border BackgroundColor="#FFEBEE"
+                                        StrokeThickness="0"
+                                        Padding="15"
+                                        Margin="0,5">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="8"/>
+                                    </Border.StrokeShape>
+                                    
+                                    <Grid ColumnDefinitions="*,Auto" 
+                                          ColumnSpacing="15"
+                                          RowDefinitions="Auto,Auto,Auto"
+                                          RowSpacing="5">
+                                        
+                                        <!-- Transaction Type -->
+                                        <Label Text="{Binding TransactionType}" 
+                                               Grid.Row="0"
+                                               Grid.Column="0"
+                                               FontSize="16"
+                                               FontAttributes="Bold"
+                                               TextColor="#333333"/>
+                                        
+                                        <!-- Amount (negative) -->
+                                        <Label Text="{Binding TransactionAmount, StringFormat='${0:N2}'}" 
+                                               Grid.Row="0"
+                                               Grid.Column="1"
+                                               FontSize="18"
+                                               FontAttributes="Bold"
+                                               TextColor="#D32F2F"
+                                               HorizontalTextAlignment="End"/>
+                                        
+                                        <!-- Date -->
+                                        <Label Text="{Binding OrderDate, StringFormat='{0:MMM dd, yyyy - hh:mm tt}'}" 
+                                               Grid.Row="1"
+                                               Grid.Column="0"
+                                               Grid.ColumnSpan="2"
+                                               FontSize="13"
+                                               TextColor="#666666"/>
+                                        
+                                        <!-- Employee -->
+                                        <Label Text="{Binding EmployeeName, StringFormat='الموظف: {0}'}" 
+                                               Grid.Row="2"
+                                               Grid.Column="0"
+                                               Grid.ColumnSpan="2"
+                                               FontSize="13"
+                                               TextColor="#999999"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
