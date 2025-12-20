@@ -5,7 +5,7 @@ using System.Drawing.Printing;
 using System.Drawing.Text;
 
 using System.Threading.Tasks;
-using BarcodeLib;
+//using BarcodeLib;
 #if WINDOWS
 using Microsoft.UI.Xaml.Media.Imaging;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -281,3 +281,4 @@ pd.DefaultPageSettings.Margins = new Margins(0, 0, 0, 10); // Remove margins
 
 // Call this function to print
 //BarcodePrinter.PrintBarcode();
+
