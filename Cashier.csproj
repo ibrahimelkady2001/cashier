@@ -76,7 +76,7 @@
         <PackageReference Include="Microsoft.Maui.Controls" Version="*" />
 
         <PackageReference Include="CommunityToolkit.Maui" Version="*" />
-        <PackageReference Include="ZXing.Net.Maui" Version="*" />
+       
         <PackageReference Include="ZXing.Net" Version="*" />
         <PackageReference Include="System.Drawing.Common" Version="*" />
         <PackageReference Include="BarcodeLib" Version="*" />
