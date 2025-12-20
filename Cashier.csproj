@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFrameworks Condition="!$([MSBuild]::IsOSPlatform('windows'))">net10.0-maccatalyst</TargetFrameworks>
@@ -21,7 +21,7 @@
         <Nullable>enable</Nullable>
 
         <!-- Display name -->
-        <ApplicationTitle>Cashier</ApplicationTitle>
+        <ApplicationTitle>AppMare</ApplicationTitle>
 
         <!-- App Identifier -->
          <ApplicationId>com.companyname.AppMare</ApplicationId>
@@ -41,7 +41,7 @@
         <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
     </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-maccatalyst|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-maccatalyst|AnyCPU'">
         <CreatePackage>false</CreatePackage>
         <CodesignProvision>newmaremac</CodesignProvision>
         <CodesignKey>Mac Developer</CodesignKey>
@@ -73,25 +73,19 @@
 
     <ItemGroup>
         <PackageReference Include="EmbedIO" Version="3.5.2" />
-<<<<<<< HEAD
-        <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.30" />
-<!--        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0"/>-->
-        <PackageReference Include="CommunityToolkit.Maui" Version="11.1.0" />
-        <PackageReference Include="ZXing.Net.Maui" Version="0.4.0" />
-        <PackageReference Include="ZXing.Net" Version="0.16.9" />
-        <PackageReference Include="System.Drawing.Common" Version="9.0.2" />
-        <PackageReference Include="BarcodeLib" Version="3.0.0.3" />
-        <PackageReference Include="NetBarcode" Version="1.4.0" />
-        <PackageReference Include="SkiaSharp" Version="2.88.8" />
-        <PackageReference Include="SkiaSharp.NativeAssets.Win32" Version="2.88.8" />
-        <PackageReference Include="SkiaSharp.NativeAssets.macOS" Version="2.88.8" />
-        <PackageReference Include="Syncfusion.Maui.Toolkit" Version="1.0.7" />
-        <PackageReference Include="ESCPOS_NET" Version="3.0.0" />
-=======
-        <PackageReference Include="Microsoft.Maui.Controls" Version="*"/>
-<!--        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="*"/>-->
+        <PackageReference Include="Microsoft.Maui.Controls" Version="*" />
+
         <PackageReference Include="CommunityToolkit.Maui" Version="*" />
->>>>>>> 01cc0a1e60876072cc79d9d556d3c6523f3cec08
+        <PackageReference Include="ZXing.Net.Maui" Version="*" />
+        <PackageReference Include="ZXing.Net" Version="*" />
+        <PackageReference Include="System.Drawing.Common" Version="*" />
+        <PackageReference Include="BarcodeLib" Version="*" />
+        <PackageReference Include="NetBarcode" Version="*" />
+        <PackageReference Include="SkiaSharp" Version="*" />
+        <PackageReference Include="SkiaSharp.NativeAssets.Win32" Version="*" />
+        <PackageReference Include="SkiaSharp.NativeAssets.macOS" Version="*" />
+        <PackageReference Include="Syncfusion.Maui.Toolkit" Version="*" />
+        <PackageReference Include="ESCPOS_NET" Version="*" />
     </ItemGroup>
 <ItemGroup>
     <PackageReference Include="DotNetMeteor.HotReload.Plugin" Version="3.*" />
