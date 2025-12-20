@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks Condition="!$([MSBuild]::IsOSPlatform('windows'))">net9.0-maccatalyst</TargetFrameworks>
-        <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net9.0-windows10.0.19041.0</TargetFrameworks>
+        <TargetFrameworks Condition="!$([MSBuild]::IsOSPlatform('windows'))">net10.0-maccatalyst</TargetFrameworks>
+        <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net10.0-windows10.0.19041.0</TargetFrameworks>
         <!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
         <!-- <TargetFrameworks>$(TargetFrameworks);net9.0-tizen</TargetFrameworks> -->
 
@@ -21,7 +21,7 @@
         <Nullable>enable</Nullable>
 
         <!-- Display name -->
-        <ApplicationTitle>AppMare</ApplicationTitle>
+        <ApplicationTitle>Cashier</ApplicationTitle>
 
         <!-- App Identifier -->
          <ApplicationId>com.companyname.AppMare</ApplicationId>
@@ -73,6 +73,7 @@
 
     <ItemGroup>
         <PackageReference Include="EmbedIO" Version="3.5.2" />
+<<<<<<< HEAD
         <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.30" />
 <!--        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0"/>-->
         <PackageReference Include="CommunityToolkit.Maui" Version="11.1.0" />
@@ -86,6 +87,11 @@
         <PackageReference Include="SkiaSharp.NativeAssets.macOS" Version="2.88.8" />
         <PackageReference Include="Syncfusion.Maui.Toolkit" Version="1.0.7" />
         <PackageReference Include="ESCPOS_NET" Version="3.0.0" />
+=======
+        <PackageReference Include="Microsoft.Maui.Controls" Version="*"/>
+<!--        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="*"/>-->
+        <PackageReference Include="CommunityToolkit.Maui" Version="*" />
+>>>>>>> 01cc0a1e60876072cc79d9d556d3c6523f3cec08
     </ItemGroup>
 <ItemGroup>
     <PackageReference Include="DotNetMeteor.HotReload.Plugin" Version="3.*" />
