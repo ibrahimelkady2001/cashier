@@ -4,6 +4,7 @@
 // using System.Drawing.Printing;
 // using System.Drawing.Text;
 
+<<<<<<< HEAD
 // using System.Threading.Tasks;
 // using BarcodeLib;
 // #if WINDOWS
@@ -14,6 +15,18 @@
 // #endif
 // using ZXing;
 // using ZXing.Common;
+=======
+using System.Threading.Tasks;
+//using BarcodeLib;
+#if WINDOWS
+using Microsoft.UI.Xaml.Media.Imaging;
+using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Graphics.Imaging;
+using Windows.Storage.Streams;
+#endif
+using ZXing;
+using ZXing.Common;
+>>>>>>> c41cdc60e14dbe5f141e814ce70b323d31c00f51
 
 // public class BarcodePrinter
 // {
@@ -279,5 +292,13 @@
 // #endif
 // }
 
+<<<<<<< HEAD
 // // Call this function to print
 // //BarcodePrinter.PrintBarcode();
+=======
+// Call this function to print
+//BarcodePrinter.PrintBarcode();
+
+
+
+>>>>>>> c41cdc60e14dbe5f141e814ce70b323d31c00f51
