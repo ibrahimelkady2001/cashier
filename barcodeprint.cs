@@ -5,7 +5,7 @@ using System.Drawing.Printing;
 using System.Drawing.Text;
 
 using System.Threading.Tasks;
-using BarcodeLib;
+//using BarcodeLib;
 #if WINDOWS
 using Microsoft.UI.Xaml.Media.Imaging;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -14,6 +14,7 @@ using Windows.Storage.Streams;
 #endif
 using ZXing;
 using ZXing.Common;
+using NetBarcode;
 
 public class BarcodePrinter
 {

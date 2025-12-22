@@ -85,7 +85,7 @@ public class BarcodePrinter2
         int barcodeHeight = config.BarcodeHeight;
 
         // Generate barcode using NetBarcode
-        Font barcodeFont = new Font("Arial", 10, FontStyle.Bold);
+        System.Drawing.Font barcodeFont = new System.Drawing.Font("Arial", 10, FontStyle.Bold);
         var barcodeGenerator = new NetBarcode.Barcode(
             config.BarcodeText,
             barcodeType,
@@ -113,7 +113,7 @@ public class BarcodePrinter2
             ConfigureGraphicsQuality(g, true);
 
             // White background
-            g.Clear(Color.White);
+            g.Clear(System.Drawing.Color.White);
 
             // Draw barcode
             int yPosition = config.Margin;
@@ -138,7 +138,7 @@ public class BarcodePrinter2
     /// </summary>
     private void DrawLabel(Graphics g, string text, float x, float y, float width, float height, float fontSize)
     {
-        using (Font labelFont = new Font("Arial", fontSize, FontStyle.Bold))
+        using ( System.Drawing.Font labelFont = new  System.Drawing.Font("Arial", fontSize, FontStyle.Bold))
         {
             StringFormat format = new StringFormat
             {
@@ -334,8 +334,8 @@ public class BarcodePrinter2
                                   string printerName = "Xprinter XP-365B",
                                   BarcodeSize size = BarcodeSize.Full)
     {
-        using (var printer = new BarcodePrinter2())
-        {
+     var printer = new BarcodePrinter2();
+ 
             var config = new BarcodeConfig
             {
                 BarcodeText = barcodeText,
@@ -350,7 +350,7 @@ public class BarcodePrinter2
             };
 
             printer.PrintBarcode(config);
-        }
+        
     }
 }
 
